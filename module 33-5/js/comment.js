@@ -3,7 +3,10 @@
 const loadComment = () => {
     fetch('https://jsonplaceholder.typicode.com/comments')
     .then(res => res.json())
-    .then(data => displayComment(data))
+    .then(data => {
+        const com = data.slice(0, 3)
+        displayComment(com)
+    })
 }
 
 const displayComment = comments => {
