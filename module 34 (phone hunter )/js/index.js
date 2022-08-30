@@ -32,7 +32,7 @@ const displayPhones = (phones, dataLimit) => {
     // display all phones
 
     phones.forEach(phone => {
-        console.log(phone)
+        // console.log(phone)
         const {brand, phone_name, image, slug} = phone;
 
         const phoneDiv = document.createElement('div');
@@ -44,7 +44,8 @@ const displayPhones = (phones, dataLimit) => {
                 <div class="card-body">
                     <h5 class="card-title">${phone_name}</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <button onclick="loadPhoneDetails('${slug}')" class="btn btn-primary">Show Details</button>
+                    <button onclick="loadPhoneDetails('${slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Show Details</button>
+
                 </div>
             </div>
         
@@ -114,9 +115,26 @@ const loadPhoneDetails = async id => {
 
     const res = await fetch(url)
     const data = await res.json();
-    console.log(data.data)
+    displayPhoneDetails(data.data)
+
+}
+
+const displayPhoneDetails = phone => {
+    console.log(phone)
+    const {name, image, releaseDate, brand, mainFeatures, others} = phone;
+
+     const modalTitle = document.getElementById('phoneModalLabel');
+     modalTitle.innerText = name;
+
+     const phoneDetails = document.getElementById('phone-details');
+     phoneDetails.innerHTML = `
+        <p>Release Date: ${releaseDate ? releaseDate : 'no release date update'}<p>
+        <p>storage: ${mainFeatures.storage ? mainFeatures.storage : 'no storage'}</p>
+        <p>Others: ${others ? others.Bluetooth : 'no Bluetooth information'}</p>
+     
+     `;
 
 
 
 }
-// loadPhones()
+loadPhones('iphone')
