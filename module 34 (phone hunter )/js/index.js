@@ -7,9 +7,21 @@ const loadPhones = async (searchText) => {
 }
 
 const displayPhones = phones => {
-  
+    // display only 10 phones
+    phones = phones.slice(0, 10)
     const phoneContainer = document.getElementById('phone-container')
     phoneContainer.textContent = '';
+
+    // display no phone found
+    const noPhoneFound = document.getElementById('no-found-massage');
+    if(phones.length === 0){
+        noPhoneFound.classList.remove('d-none')
+    }
+    else{
+        noPhoneFound.classList.add('d-none')
+    }
+    // display all phones
+
     phones.forEach(phone => {
         console.log(phone)
         const {brand, phone_name, image, slug} = phone;
@@ -40,4 +52,4 @@ document.getElementById('btn-search').addEventListener('click', function(){
     searchField.value = '';
 })
 
-loadPhones()
+// loadPhones()
